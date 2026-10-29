@@ -1,27 +1,41 @@
-pipeline {
-   agent any
-   stages {
-      stage('build') {
-          step{
-               echo "Hi... this is build stage"
-               } 
-             }
-      
-      stage('test') {
-          step{
-               echo "Hi... This is stage 2 ... testing stage"}
-               }
-      
-          }
 
-           
-      stage('deploy') {
-          step(
-               echo "Hi.... This is final stage..."
-               )
-           }
+pipeline {
+    agent any
+
+    stages {
+        stage('Git Checkout') {
+            steps {
+                echo 'Starting Git checkout stage'
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'This is the build stage'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'This is the test stage'
+            }
+        }
+
+        stage('Final Stage') {
+            steps {
+                echo 'Hi.... This is final stage...'
+            }
+        }
     }
 
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check the console output.'
+        }
+    }
 }
- 
-    
+
